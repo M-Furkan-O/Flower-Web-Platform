@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<District> Districts => Set<District>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<WikiNote> WikiNotes => Set<WikiNote>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -39,5 +40,10 @@ public class AppDbContext : DbContext
         builder.Entity<OrderItem>()
             .Property(oi => oi.UnitPrice)
             .HasPrecision(18, 2);
+
+        // Configure many-to-many relationship between Product and WikiNote
+        builder.Entity<Product>()
+            .HasMany(p => p.WikiNotes)
+            .WithMany(wn => wn.Products);
     }
 }
