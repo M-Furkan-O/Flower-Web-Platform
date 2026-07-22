@@ -159,6 +159,9 @@ namespace FlowerShop.API.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("DefaultVaseLifeDays")
+                        .HasColumnType("integer");
+
                     b.Property<int>("FreshnessScore")
                         .HasColumnType("integer");
 
@@ -182,6 +185,46 @@ namespace FlowerShop.API.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("FlowerShop.API.Models.WikiNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WikiNotes");
+                });
+
+            modelBuilder.Entity("ProductWikiNote", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WikiNotesId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ProductsId", "WikiNotesId");
+
+                    b.HasIndex("WikiNotesId");
+
+                    b.ToTable("ProductWikiNote");
                 });
 
             modelBuilder.Entity("FlowerShop.API.Models.Order", b =>
@@ -223,6 +266,21 @@ namespace FlowerShop.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ProductWikiNote", b =>
+                {
+                    b.HasOne("FlowerShop.API.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FlowerShop.API.Models.WikiNote", null)
+                        .WithMany()
+                        .HasForeignKey("WikiNotesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FlowerShop.API.Models.Category", b =>

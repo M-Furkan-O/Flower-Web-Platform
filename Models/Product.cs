@@ -10,4 +10,6 @@ public class Product
     public string ImageUrl { get; set; } = string.Empty;
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
+    public int DefaultVaseLifeDays { get; set; } = 7;
+    public List<WikiNote> WikiNotes { get; set; } = new();
 }

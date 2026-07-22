@@ -1,4 +1,5 @@
 using FlowerShop.API.Data;
+using FlowerShop.API.Services;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.IO.Converters;
 
@@ -8,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), o => o.UseNetTopologySuite()));
+
+// Register business logic services
+builder.Services.AddScoped<FreshnessService>();
+builder.Services.AddScoped<DeliveryService>();
+builder.Services.AddScoped<WikiService>();
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
