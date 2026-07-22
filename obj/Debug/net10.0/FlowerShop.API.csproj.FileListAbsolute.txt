@@ -129,3 +129,4 @@ C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Deb
 C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\NetTopologySuite.Features.dll
 C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\NetTopologySuite.IO.GeoJSON4STJ.dll
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\obj\Debug\net10.0\FlowerShop.API.sourcelink.json
