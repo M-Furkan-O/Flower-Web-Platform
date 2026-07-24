@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj": {}
+    "/Users/meryemhilalyildiz/Desktop/Flower-Web-Platform/FlowerShop.API.csproj": {}
   },
   "projects": {
-    "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj": {
+    "/Users/meryemhilalyildiz/Desktop/Flower-Web-Platform/FlowerShop.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj",
+        "projectUniqueName": "/Users/meryemhilalyildiz/Desktop/Flower-Web-Platform/FlowerShop.API.csproj",
         "projectName": "FlowerShop.API",
-        "projectPath": "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj",
-        "packagesPath": "/Users/furkanozkan/.nuget/packages/",
-        "outputPath": "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/obj/",
+        "projectPath": "/Users/meryemhilalyildiz/Desktop/Flower-Web-Platform/FlowerShop.API.csproj",
+        "packagesPath": "/Users/meryemhilalyildiz/.nuget/packages/",
+        "outputPath": "/Users/meryemhilalyildiz/Desktop/Flower-Web-Platform/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/furkanozkan/.nuget/NuGet/NuGet.Config"
+          "/Users/meryemhilalyildiz/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -49,6 +49,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[10.0.10, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[10.0.3, )"
             },
             "NetTopologySuite.IO.GeoJSON4STJ": {
               "target": "Package",
