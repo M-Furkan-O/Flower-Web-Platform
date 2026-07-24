@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj": {}
+    "C:\\Users\\USER\\OneDrive\\Desktop\\online_flower_shop\\backend\\FlowerShop.API\\FlowerShop.API.csproj": {}
   },
   "projects": {
-    "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj": {
+    "C:\\Users\\USER\\OneDrive\\Desktop\\online_flower_shop\\backend\\FlowerShop.API\\FlowerShop.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\OneDrive\\Desktop\\online_flower_shop\\backend\\FlowerShop.API\\FlowerShop.API.csproj",
         "projectName": "FlowerShop.API",
-        "projectPath": "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/FlowerShop.API.csproj",
-        "packagesPath": "/Users/furkanozkan/.nuget/packages/",
-        "outputPath": "/Users/furkanozkan/Documents/GitHub/Flower-Web-Platform/obj/",
+        "projectPath": "C:\\Users\\USER\\OneDrive\\Desktop\\online_flower_shop\\backend\\FlowerShop.API\\FlowerShop.API.csproj",
+        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\USER\\OneDrive\\Desktop\\online_flower_shop\\backend\\FlowerShop.API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/furkanozkan/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,11 +51,19 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.17.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
               "version": "[10.0.10, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[10.0.3, )"
             },
             "NetTopologySuite.IO.GeoJSON4STJ": {
               "target": "Package",
@@ -86,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
