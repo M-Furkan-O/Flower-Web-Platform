@@ -20,6 +20,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), o => o.UseNetTopologySuite()));
 
+// Add Redis distributed cache
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "FlowerShop_";
+});
+
 // Register business logic services
 builder.Services.AddScoped<FreshnessService>();
 builder.Services.AddScoped<DeliveryService>();
