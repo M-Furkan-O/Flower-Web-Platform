@@ -14,12 +14,14 @@ public class AdminController : ControllerBase
     private readonly AppDbContext _context;
     private readonly FreshnessService _freshnessService;
     private readonly DeliveryService _deliveryService;
+    private readonly WikiService _wikiService;
     
-    public AdminController(AppDbContext context, FreshnessService freshnessService, DeliveryService deliveryService)
+    public AdminController(AppDbContext context, FreshnessService freshnessService, DeliveryService deliveryService, WikiService wikiService)
     {
         _context = context;
         _freshnessService = freshnessService;
         _deliveryService = deliveryService;
+        _wikiService = wikiService;
     }
     
     // Product Management Endpoints
@@ -226,6 +228,8 @@ public class AdminController : ControllerBase
         _context.WikiNotes.Add(wikiNote);
         await _context.SaveChangesAsync();
         
+        await _wikiService.InvalidateWikiCacheAsync();
+        
         return CreatedAtAction(nameof(GetWikiNote), new { id = wikiNote.Id }, wikiNote);
     }
     
@@ -258,6 +262,101 @@ public class AdminController : ControllerBase
             product.WikiNotes.Add(wikiNote);
             await _context.SaveChangesAsync();
         }
+        
+        return NoContent();
+    }
+    
+    // District Management Endpoints
+    
+    [HttpGet("districts")]
+    public async Task<ActionResult<List<District>>> GetAllDistricts()
+    {
+        var districts = await _context.Districts.ToListAsync();
+        return districts;
+    }
+    
+    [HttpGet("districts/{id}")]
+    public async Task<ActionResult<District>> GetDistrict(int id)
+    {
+        var district = await _context.Districts.FindAsync(id);
+        
+        if (district == null)
+        {
+            return NotFound();
+        }
+        
+        return district;
+    }
+    
+    [HttpPost("districts")]
+    public async Task<ActionResult<District>> CreateDistrict([FromBody] CreateDistrictDto districtDto)
+    {
+        var district = new District
+        {
+            Name = districtDto.Name,
+            BaseDeliveryFee = districtDto.BaseDeliveryFee,
+            Location = districtDto.Latitude != null && districtDto.Longitude != null
+                ? new Point(districtDto.Latitude.Value, districtDto.Longitude.Value) { SRID = 4326 }
+                : null
+        };
+        
+        _context.Districts.Add(district);
+        await _context.SaveChangesAsync();
+        
+        return CreatedAtAction(nameof(GetDistrict), new { id = district.Id }, district);
+    }
+    
+    [HttpPut("districts/{id}")]
+    public async Task<ActionResult> UpdateDistrict(int id, [FromBody] UpdateDistrictDto districtDto)
+    {
+        var district = await _context.Districts.FindAsync(id);
+        
+        if (district == null)
+        {
+            return NotFound();
+        }
+        
+        district.Name = districtDto.Name;
+        district.BaseDeliveryFee = districtDto.BaseDeliveryFee;
+        
+        if (districtDto.Latitude != null && districtDto.Longitude != null)
+        {
+            district.Location = new Point(districtDto.Latitude.Value, districtDto.Longitude.Value) { SRID = 4326 };
+        }
+        
+        await _context.SaveChangesAsync();
+        
+        return NoContent();
+    }
+    
+    [HttpPut("districts/{id}/delivery-fee")]
+    public async Task<ActionResult> UpdateDistrictDeliveryFee(int id, [FromBody] UpdateDeliveryFeeDto feeDto)
+    {
+        var district = await _context.Districts.FindAsync(id);
+        
+        if (district == null)
+        {
+            return NotFound();
+        }
+        
+        district.BaseDeliveryFee = feeDto.BaseDeliveryFee;
+        await _context.SaveChangesAsync();
+        
+        return NoContent();
+    }
+    
+    [HttpDelete("districts/{id}")]
+    public async Task<ActionResult> DeleteDistrict(int id)
+    {
+        var district = await _context.Districts.FindAsync(id);
+        
+        if (district == null)
+        {
+            return NotFound();
+        }
+        
+        _context.Districts.Remove(district);
+        await _context.SaveChangesAsync();
         
         return NoContent();
     }
