@@ -7,39 +7,55 @@ public class FreshnessService
 {
     public FreshnessInfoDto CalculateFreshness(Product product, DateTime? deliveryDate = null)
     {
-        var targetDate = deliveryDate ?? DateTime.UtcNow;
-        var daysSinceOrder = (targetDate - DateTime.UtcNow).Days;
-        
-        // Calculate freshness score based on stock and default vase life
-        // Higher stock = potentially fresher (assuming FIFO inventory)
-        var baseScore = Math.Min(10, Math.Max(1, product.FreshnessScore));
-        
-        // Adjust score based on delivery date
-        // If delivery is in the future, score remains high
-        // If delivery was in the past, score decreases
-        var adjustedScore = (double)baseScore;
-        if (daysSinceOrder > 0)
+        if (product.Stock <= 0)
         {
-            // Reduce score by 0.5 per day after delivery
-            adjustedScore = Math.Max(1.0, adjustedScore - (daysSinceOrder * 0.5));
+            return new FreshnessInfoDto
+            {
+                FreshnessScore = 0,
+                EstimatedVaseLifeDays = product.DefaultVaseLifeDays,
+                RemainingVaseLifeDays = 0,
+                FreshnessPercentage = 0
+            };
         }
-        
-        // Calculate estimated vase life
+
+        var targetDate = deliveryDate ?? DateTime.UtcNow;
+        var daysSinceDelivery = (targetDate - DateTime.UtcNow).Days;
+
+        // Kalite bileşeni (%55): florist puanı 1–10
+        var quality = (Math.Clamp(product.FreshnessScore, 1, 10) / 10.0) * 55;
+
+        // Stok bileşeni (%25): az stok hafif düşüş
+        var stock = product.Stock switch
+        {
+            <= 2 => 12.0,
+            <= 5 => 18.0,
+            <= 10 => 22.0,
+            _ => 25.0
+        };
+
+        // Vazo ömrü bileşeni (%20)
+        var vase = Math.Min(20.0, (product.DefaultVaseLifeDays / 10.0) * 20);
+
+        var basePercentage = Math.Min(100.0, quality + stock + vase);
+
+        // Teslimat tarihi geçmişse günlük %3 düşüş
+        if (daysSinceDelivery > 0)
+        {
+            basePercentage = Math.Max(0, basePercentage - (daysSinceDelivery * 3));
+        }
+
         var estimatedVaseLife = product.DefaultVaseLifeDays;
-        var remainingVaseLife = Math.Max(0, estimatedVaseLife - daysSinceOrder);
-        
-        // Calculate freshness percentage for progress bar
-        var freshnessPercentage = (remainingVaseLife / (double)estimatedVaseLife) * 100;
-        
+        var remainingVaseLife = Math.Max(0, estimatedVaseLife - daysSinceDelivery);
+
         return new FreshnessInfoDto
         {
-            FreshnessScore = (int)Math.Round(adjustedScore),
+            FreshnessScore = (int)Math.Round(basePercentage / 10.0),
             EstimatedVaseLifeDays = estimatedVaseLife,
             RemainingVaseLifeDays = remainingVaseLife,
-            FreshnessPercentage = Math.Round((double)freshnessPercentage, 1)
+            FreshnessPercentage = Math.Round(basePercentage, 1)
         };
     }
-    
+
     public List<FreshnessInfoDto> CalculateFreshnessForProducts(List<Product> products, DateTime? deliveryDate = null)
     {
         return products.Select(p => CalculateFreshness(p, deliveryDate)).ToList();
