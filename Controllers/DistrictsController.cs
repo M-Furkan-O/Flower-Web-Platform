@@ -19,6 +19,7 @@ public class DistrictsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<District>>> GetDistricts()
     {
-        return await _context.Districts.ToListAsync();
+        var districts = await _context.Districts.OrderBy(d => d.Name).ToListAsync();
+        return Ok(districts);
     }
 }

@@ -11,38 +11,54 @@ public class AppDbContext : DbContext
 
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<City> Cities => Set<City>();
     public DbSet<District> Districts => Set<District>();
+    public DbSet<Neighborhood> Neighborhoods => Set<Neighborhood>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<WikiNote> WikiNotes => Set<WikiNote>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasPostgresExtension("postgis");
+        // PostgreSQL PostGIS eklentisi
+        modelBuilder.HasPostgresExtension("postgis");
 
-        builder.Entity<Product>()
+        // City - District İlişkisi (1 - N)
+        modelBuilder.Entity<District>()
+            .HasOne(d => d.City)
+            .WithMany(c => c.Districts)
+            .HasForeignKey(d => d.CityId);
+
+        // District - Neighborhood İlişkisi (1 - N)
+        modelBuilder.Entity<Neighborhood>()
+            .HasOne(n => n.District)
+            .WithMany()
+            .HasForeignKey(n => n.DistrictId);
+
+        // Precision Ayarları
+        modelBuilder.Entity<Product>()
             .Property(p => p.Price)
             .HasPrecision(18, 2);
 
-        builder.Entity<District>()
+        modelBuilder.Entity<District>()
             .Property(d => d.BaseDeliveryFee)
             .HasPrecision(18, 2);
 
-        builder.Entity<Order>(entity =>
+        modelBuilder.Entity<Order>(entity =>
         {
             entity.Property(o => o.SubTotal).HasPrecision(18, 2);
             entity.Property(o => o.DeliveryFee).HasPrecision(18, 2);
             entity.Property(o => o.GrandTotal).HasPrecision(18, 2);
         });
 
-        builder.Entity<OrderItem>()
+        modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.UnitPrice)
             .HasPrecision(18, 2);
 
-        // Configure many-to-many relationship between Product and WikiNote
-        builder.Entity<Product>()
+        // Product - WikiNote (Many-to-Many) İlişkisi
+        modelBuilder.Entity<Product>()
             .HasMany(p => p.WikiNotes)
             .WithMany(wn => wn.Products);
     }

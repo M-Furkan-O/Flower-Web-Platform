@@ -399,3 +399,9 @@ C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\obj\Deb
 C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\BouncyCastle.Cryptography.dll
 C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\MailKit.dll
 C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\MimeKit.dll
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\package-lock.json
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\package.json
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\tsconfig.app.json
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\tsconfig.json
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\tsconfig.node.json
+C:\Users\USER\OneDrive\Desktop\online_flower_shop\backend\FlowerShop.API\bin\Debug\net10.0\Data\turkey_data.json

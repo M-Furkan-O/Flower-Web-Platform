@@ -8,6 +8,7 @@ public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {
+        // 1. KATEGORİLERİ EKLE
         if (!context.Categories.Any())
         {
             context.Categories.AddRange(
@@ -30,6 +31,7 @@ public static class DbInitializer
             context.SaveChanges();
         }
 
+        // 2. ÜRÜNLERİ EKLE
         if (!context.Products.Any())
         {
             var categories = context.Categories.ToDictionary(c => c.Name);
@@ -75,37 +77,7 @@ public static class DbInitializer
             context.SaveChanges();
         }
 
-        if (!context.Districts.Any())
-        {
-            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-
-            context.Districts.AddRange(
-                new District
-                {
-                    Name = "Çankaya",
-                    BaseDeliveryFee = 50,
-                    Location = geometryFactory.CreatePoint(new Coordinate(32.8597, 39.9208))
-                },
-                new District
-                {
-                    Name = "Yenimahalle",
-                    BaseDeliveryFee = 60,
-                    Location = geometryFactory.CreatePoint(new Coordinate(32.8123, 39.9678))
-                },
-                new District
-                {
-                    Name = "Keçiören",
-                    BaseDeliveryFee = 65,
-                    Location = geometryFactory.CreatePoint(new Coordinate(32.8644, 39.9782))
-                },
-                new District
-                {
-                    Name = "Polatlı",
-                    BaseDeliveryFee = 120,
-                    Location = geometryFactory.CreatePoint(new Coordinate(32.1481, 39.5833))
-                });
-
-            context.SaveChanges();
-        }
+        // 3. İLÇE/ŞEHİR SEEDER ÇAKIŞMASINI ÖNLEMEK İÇİN BURADAKİ İLÇE EKLENTİSİ KALDIRILDI.
+        // Adres işlemleri (Şehir-İlçe-Mahalle) DbSeeder.cs tarafından yönetiliyor.
     }
 }
