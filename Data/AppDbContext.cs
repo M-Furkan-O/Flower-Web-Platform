@@ -14,9 +14,11 @@ public class AppDbContext : DbContext
     public DbSet<City> Cities => Set<City>();
     public DbSet<District> Districts => Set<District>();
     public DbSet<Neighborhood> Neighborhoods => Set<Neighborhood>();
+    public DbSet<StoreContact> StoreContacts { get; set; }
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<WikiNote> WikiNotes => Set<WikiNote>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
